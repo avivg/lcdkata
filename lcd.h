@@ -9,9 +9,6 @@ namespace LCDKata {
     public:
         std::vector<std::string> operator()(unsigned int number) const;
         std::vector<std::string> operator()(std::string) const;
-
-    private:
-        std::vector<std::string> digit_repr(char digit) const;
     };
 }
 

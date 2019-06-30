@@ -8,6 +8,8 @@ std::vector<std::string> LCDKata::LCDDisplay::operator()(unsigned int number) co
     return (*this)(numstrstream.str());
 }
 
+static std::vector<std::string> digit_repr(char digit);
+
 std::vector<std::string> LCDKata::LCDDisplay::operator()(std::string numstr) const {
     using std::vector;
     using std::string;
@@ -27,60 +29,63 @@ std::vector<std::string> LCDKata::LCDDisplay::operator()(std::string numstr) con
     return res;
 }
 
-std::vector<std::string> LCDKata::LCDDisplay::digit_repr(char digit) const {
-    (void) digit;
+static const char *dig_rep[][3] = {
+    [0] = {
+        " _ ",
+        "| |",
+        "|_|"
+    },
+    [1] = {
+        "   ",
+        "  |",
+        "  |"
+    },
+    [2] = {
+        " _ ",
+        " _|",
+        "|_ "
+    },
+    [3] = {
+        " _ ",
+        " _|",
+        " _|"
+    },
+    [4] = {
+        "   ",
+        "|_|",
+        "  |"
+    },
+    [5] = {
+        " _ ",
+        "|_ ",
+        " _|"
+    },
+    [6] = {
+        " _ ",
+        "|_ ",
+        "|_|"
+    },
+    [7] = {
+        " _ ",
+        "  |",
+        "  |"
+    },
+    [8] = {
+        " _ ",
+        "|_|",
+        "|_|"
+    },
+    [9] = {
+        " _ ",
+        "|_|",
+        " _|"
+    },
+};
+
+static std::vector<std::string> digit_repr(char digit) {
     std::vector<std::string> ret;
-    switch (digit) {
-    case '0':
-        ret.push_back(" _ ");
-        ret.push_back("| |");
-        ret.push_back("|_|");
-        break;
-    case '1':
-        ret.push_back("   ");
-        ret.push_back("  |");
-        ret.push_back("  |");
-        break;
-    case '2':
-        ret.push_back(" _ ");
-        ret.push_back(" _|");
-        ret.push_back("|_ ");
-        break;
-    case '3':
-        ret.push_back(" _ ");
-        ret.push_back(" _|");
-        ret.push_back(" _|");
-        break;
-    case '4':
-        ret.push_back("   ");
-        ret.push_back("|_|");
-        ret.push_back("  |");
-        break;
-    case '5':
-        ret.push_back(" _ ");
-        ret.push_back("|_ ");
-        ret.push_back(" _|");
-        break;
-    case '6':
-        ret.push_back(" _ ");
-        ret.push_back("|_ ");
-        ret.push_back("|_|");
-        break;
-    case '7':
-        ret.push_back(" _ ");
-        ret.push_back("  |");
-        ret.push_back("  |");
-        break;
-    case '8':
-        ret.push_back(" _ ");
-        ret.push_back("|_|");
-        ret.push_back("|_|");
-        break;
-    case '9':
-        ret.push_back(" _ ");
-        ret.push_back("|_|");
-        ret.push_back(" _|");
-        break;
+    for (int i = 0; i < 3; i++) {
+        ret.push_back(dig_rep[static_cast<size_t>(digit - '0')][i]);
     }
     return ret;    
 }
