@@ -1,6 +1,10 @@
 #include "lcd.h"
-
 #include <sstream>
+
+using dig_part_t = const char*;
+using digit_t = std::vector<dig_part_t>;
+
+static digit_t digit_repr(char digit);
 
 std::vector<std::string> LCDKata::LCDDisplay::operator()(unsigned int number) const {
     std::ostringstream numstrstream;
@@ -8,13 +12,9 @@ std::vector<std::string> LCDKata::LCDDisplay::operator()(unsigned int number) co
     return (*this)(numstrstream.str());
 }
 
-static std::vector<std::string> digit_repr(char digit);
-
 std::vector<std::string> LCDKata::LCDDisplay::operator()(std::string numstr) const {
-    using std::vector;
-    using std::string;
-    vector<vector<string>> digits_repr;
-    vector<string> res;
+    std::vector<digit_t> digits_repr;
+    std::vector<std::string> res;
 
     for (char c: numstr) {
         digits_repr.push_back(digit_repr(c));
@@ -82,8 +82,8 @@ static const char *dig_rep[][3] = {
     },
 };
 
-static std::vector<std::string> digit_repr(char digit) {
-    std::vector<std::string> ret;
+static digit_t digit_repr(char digit) {
+    digit_t ret;
     for (int i = 0; i < 3; i++) {
         ret.push_back(dig_rep[static_cast<size_t>(digit - '0')][i]);
     }
